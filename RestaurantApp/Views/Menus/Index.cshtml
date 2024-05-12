@@ -1,0 +1,59 @@
+﻿@model RestaurantApp.Models.ViewModels.MenuViewModel<List<RestaurantApp.Models.Menu>>;
+
+@*@model List<RestaurantApp.Models.Menu>;
+*@@{
+    ViewData["Title"] = "Menus";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<section style="background-image: url('@Url.Content("~/images/menus-background.jpg")'); background-size: cover; background-position: center; color:#fff;">
+    <div class="menu-container">
+        <div class="section-title">
+            <h4>Exclusive menu</h4>
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing</p>
+        </div>
+    <div class="menu">
+        <div class="restaurant-details">
+             <h1>Name</h1>
+            <h3>Description</h3>
+        </div>
+         <div class="products-container">
+                @foreach(var product in Model.menu)
+                {
+                    <div class="product-card">
+                        <h4 style="background-color: #ff7720; text-align: center;">@product.Name</h4>
+                        <img src="~/images/Menus.jpg" alt="@product.Name">
+                        <p style="word-break: break-all">@product.Description</p>
+                        <span class="rate"><i>★</i><i>★</i><i>★</i><i>★</i><i>★</i></span>
+                        <span class="prodNum">Products: 55</span>
+                        <div class="product-actions">
+                            <a href=@Url.Action("Create", new {id = product.MenuId}) class="dodaj-product"><i class="fa-solid fa-plus"></i></a>
+@*                            <a onclick="editRestaurant('edit', '/Menus/Edit/', '@product.MenuId')" class="edit-product"><i class="fa-solid fa-pen-to-square"></i></a>
+*@                            
+                            <a href=@Url.Action("Edit", new {id = product.MenuId}) class="edit-product"><i class="fa-solid fa-pen-to-square"></i></a>             
+                            <a href=@Url.Action("Delete", new {id = product.MenuId}) class="add-product"><i class="fa-solid fa-trash"></i></a>
+                        </div>
+                        @*<button class"btn btn-primary add-product-btn">Add product</button>*@
+                    </div>
+                }
+         </div>
+    </div>
+</div>
+</section>
+@await Html.PartialAsync("_DialogComponent", Model)
+</body>
+</html>
+	@section Scripts{
+		<script src="~/lib/limonte-sweetalert2/sweetalert2.min.js"></script>
+	    <script src="~/lib/custom/js/menu.js"></script>
+	}

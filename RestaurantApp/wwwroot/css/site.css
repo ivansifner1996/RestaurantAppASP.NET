@@ -1,0 +1,292 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px; /* Vertically center the text there */
+}
+
+.card-img-top {
+    height: 300px; /* Desired height for the images */
+    background-size: cover;
+    background-position: center;
+}
+
+.restaurant {
+    background-image: url('../images/RestaurantManagement.jpg'); /* Adjust the path based on your image location */
+}
+
+.menus {
+    background-image: url('../images/Menus.jpg'); /* Adjust the path based on your image location */
+}
+
+.orders {
+    background-image: url('../images/Orders.jpg'); /* Adjust the path based on your image location */
+}
+
+a:hover{
+    cursor: pointer;
+}
+
+.menu-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.menu {
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    padding: 50px;
+}
+
+.products-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.product-card {
+    padding: 10px;
+    width: calc(33.33% - 20px);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative;
+    background-color: #5d290ddb;
+}
+
+.product-card:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.product-card img {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.product-card h4 {
+    margin-top: 10px;
+    font-size: 25px;
+    position: relative;
+}
+
+.product-actions {
+    display:none;
+}
+
+.product-card:hover {
+    opacity: 0.8;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+}
+.product-card:hover .product-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #27150da1;
+    width: 50%;
+    border-radius: 15px;
+    padding: 20px 5px;
+}
+
+.product-card .prodNum {
+    right: 0;
+    bottom: 0;
+    background-color: #ff7720;
+    position: absolute;
+    border-radius: 15px 0 0 0;
+    font-weight: 700;
+}
+
+.product-actions a {
+    color: #e9ecefd6;
+    font-size: 28px;
+    display: flex;
+    align-items: center;
+}
+
+.product-actions a:hover {
+   color: #007bff;
+}
+
+.section-title {
+    text-align: center;
+    width: 100%;
+}
+
+.restaurant-details h1 {
+    font-size: 40px;
+    text-transform: uppercase;
+}
+
+.restaurant-details {
+    margin-bottom: 50px;
+    text-align: center;
+}
+
+.rate i, .rate i:hover ~ i {
+    color: #222;
+    text-shadow: none;
+    transition: color 200ms, text-shadow 200ms;
+    transition-delay: 0;
+    font-size: 30px;
+}
+
+.rate:hover i {
+    color: #fc0;
+    text-shadow: #fc0 0 0 20px;
+}
+
+.menuModal {
+    position: fixed;
+    z-index: 22;
+    padding-top: 50px;
+    display: block;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    background-color: #170d0a96;
+    overflow: auto;
+}
+
+.animationOpacity {
+    animation: opac 0.8s;
+}
+
+.modalContent {
+    position: relative;
+    padding: 30px;
+    width: calc(50% - 50px);
+    margin: auto;
+    background-color: green;
+    border-radius: 20px;
+    border: 5px solid gray;
+    color: #fff !important;
+    background-image: linear-gradient(45deg, #79401aed, #a1511cbd); 
+    opacity: .92;
+}
+
+.menu-right {
+    float:right;
+}
+
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.input-group {
+    display: flex;
+    gap: 5px;
+}
+
+textarea{
+    resize: none;
+    border-radius: 5px;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* spacing between label and input */
+    flex-grow: 1;
+}
+
+.input-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    position: absolute;
+    right: 25px;
+    color: #1c0e09;
+}
+
+.liner {
+    padding: 2px;
+    box-shadow: 10px 5px 2px #35190b;
+}
+
+.closeIcon:hover{
+    cursor: pointer;
+}

@@ -1,0 +1,130 @@
+﻿@model RestaurantApp.Models.ViewModels.RestaurantCollectedData
+
+@{
+	ViewData["Title"] = "Restaurants";
+}
+@section Styles {
+<link href="~/lib/limonte-sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+}
+
+
+<h1>Restaurants</h1>
+
+<p>
+	<a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				Restaurant Name
+			</th>
+			<th>
+				Country
+			</th>
+			<th>
+				Address
+			</th>
+			<th>
+				Foundation Date
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+				@foreach (var item in Model.Restaurants)
+		{
+			string selectedRow = "";
+			if (item.ID == (int?)ViewData["RestaurantId"])
+			{
+				selectedRow = "table-success";
+			}
+			<tr class="@selectedRow">
+				<td>
+					@Html.DisplayFor(modelItem => item.RestaurantName)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Country)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Address)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.FoundationDate)
+				</td>
+				<td>
+					<a asp-action="Index" asp-route-id="@item.ID">Select</a> |
+					<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+					<a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+					<button type="button" name="Delete" data-delRestName="@item.RestaurantName" data-delRestId="@item.ID"  class="btn btn-danger btn-sm" onclick="deleteRestaurant(this)">Delete</button>
+			</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@if  (Model.Menus != null)
+{
+	<h3>All restaurant menus:</h3>
+	<table class="table">
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+		</tr>
+		@foreach  (var item in Model.Menus)
+		{
+			string selectedRow = "";
+			if  (item.MenuId == (int?)ViewData["RestaurantId"])
+			{
+				selectedRow = "success";
+			}
+			<tr class="@selectedRow">
+				<td>
+					@Html.DisplayFor(menu => item.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(menu => item.Description)
+				</td>
+				<td>
+					@Html.ActionLink("Select", "Index", new {menuId = item.MenuId})
+					@*<a asp-action="Edit" asp-route-modelId="@item.MenuId">Edit</a>
+						<a asp-action="Details" asp-route-modelId="@item.MenuId">Details</a>
+						<a asp-action="Delete" asp-route-modelId="@item.MenuId">Delete</a>*@
+				</td>
+
+			</tr>
+		}
+	</table>
+}
+@if  (Model.Products != null)
+{
+	<h3>All products linked to menu</h3>
+	<table class="tr">
+		<tr>
+			<th>Product name</th>
+			<th>Price</th>
+			<th>Description</th>
+		</tr>
+		@foreach  (var item in Model.Products)
+		{
+			string rowStatus = "";
+			if  (item.MenuId == (int?)ViewData["MenuId"])
+			{
+				rowStatus = "success";
+			}
+
+			<tr class="@rowStatus">
+				<td>@Html.DisplayFor(product => item.Name)</td>
+				<td>@Html.DisplayFor(product => item.Price)</td>
+				<td>@Html.DisplayFor(product => item.Description)</td>
+			</tr>
+		}
+	</table>
+
+	@section Scripts{
+		<script src="~/lib/limonte-sweetalert2/sweetalert2.min.js"></script>
+	    <script src="~/lib/custom/js/restaurant.js"></script>
+	}
+}
+
+@await Html.PartialAsync("_GetRestaurantLayout", Model)

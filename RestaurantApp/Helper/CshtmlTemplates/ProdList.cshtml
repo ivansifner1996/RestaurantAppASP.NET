@@ -1,0 +1,22 @@
+﻿<div class="input-group">
+     <div class="input-wrapper">
+         <label asp-for="[[[ProdName]]]" class="control-form-label">Product Name</label>
+         <input asp-for="[[[ProdName]]]" name="[[[ProdNameInput]]]" value="[[[ProdNameValue]]]" type="text" class="form-control"/>
+         <span asp-for="[[[ProdName]]]" class="text-danger"></span>
+      </div>
+      <div class="input-wrapper">
+         <label for="[[[ProdPrice]]]" class="control-form-label">Price</label>
+         <div class="input-icon">
+              <input asp-for="[[[ProdPrice]]]" name="[[[ProdPriceInput]]]" value="[[[ProdPriceValue]]]" type="number" step="0.01" class="form-control"/>
+              <i class="fa-solid fa-dollar-sign icon"></i>
+               <span asp-for="[[[ProdPrice]]]" class="text-danger"></span>
+          </div>
+       </div>
+</div>
+<textarea asp-for="[[[ProdDescription]]]" name="[[[ProdDescriptionInput]]]" placeholder="Product Description">[[[ProdDescriptionValue]]]</textarea>
+<span asp-for="[[[ProdDescription]]]" class="text-danger"></span>
+<div class="file-upload">
+    <label for="file-input">Upload picture</label>
+    <input type="file" class="form-control-file" id="file-input"/>
+</div>
+<div class="liner"></div>

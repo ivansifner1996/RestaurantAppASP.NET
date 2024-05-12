@@ -1,0 +1,164 @@
+﻿@model RestaurantApp.Models.Restaurant
+
+@{
+	ViewData["Title"] = "Create Restaurant";
+}
+
+<h4>Restaurant</h4>
+<hr />
+
+<div class="container">
+	<h2>Create Restaurant</h2>
+	<hr />
+	<form asp-action="Create" method="post">
+		<div class="form-group">
+			<label asp-for="FoundationDate" class="control-label">Foundation Date</label>
+			<input asp-for="FoundationDate" class="form-control" />
+			<span asp-validation-for="FoundationDate" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="Country" class="control-label">Country</label>
+			<input asp-for="Country" class="form-control" />
+			<span asp-validation-for="Country" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="RestaurantName" class="control-label">Restaurant name</label>
+			<input asp-for="RestaurantName" class="form-control" />
+			<span asp-validation-for="RestaurantName" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="Address" class="control-label">Address</label>
+			<input asp-for="Address" class="form-control" />
+			<span asp-validation-for="Address" class="text-danger"></span>
+		</div>
+
+		<!-- Button to toggle menu input fields -->
+		<button type="button" class="btn btn-primary mb-3" id="toggleMenuFields">Show Menus</button>
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<!-- Menu input fields (initially hidden) -->
+		<div id="menuFields" class="toggable-div" style="display: @ViewData["Visibility"]" data-count="@((Model?.Menus != null) ? Model.Menus.Count : 0)">
+			@if (Model?.Menus != null)
+			{
+				@foreach (var (menu, i) in Model.Menus.Select((menu, index) => (menu, index)).ToArray())
+				{
+					<div class="form-group">
+						<label asp-for="@Model.Menus[i].Name" dc-index="@i">Menu Name</label>
+						<input asp-for="@Model.Menus[i].Name" dc-index="@i" type="text" class="form-control" id="menuName1" name="Menus[@i].Name" value="@menu.Name" />
+						<span asp-validation-for="@Model.Menus[i].Name" dc-index="@i" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="@Model.Menus[i].Description" dc-index="@i">Menu Description</label>
+						<input asp-for="@Model.Menus[i].Description" dc-index="@i" type="text" class="form-control" id="menuDescription@(i)" name="Menus[@i].Description" value="@menu.Description" />
+						<span asp-validation-for="@Model.Menus[i].Description" dc-index="@i" class="text-danger"></span>
+
+					</div>
+					<button type="button" class="btn btn-danger clear-menu" dc-index="@i">Clear</button>
+				}
+			}
+
+		</div>
+
+		<button type="button" class="btn btn-info mb-3" id="addMenu">Add Menu</button>
+
+		<br />
+		<button type="submit" class="btn btn-success">Create</button>
+	</form>
+</div>
+
+<div>
+	<a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+	await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+<script>
+	$(document).ready(function () {
+
+		function renderMenus(index = undefined){
+		   index ?? 0;
+		   $('label[dc-index], input[dc-index], span[dc-index], button[dc-index]').filter(function(){
+			  return parseInt($(this).attr('dc-index')) > index;
+				}).each(function(index,element){
+						var newIndex = parseInt($(this).attr('dc-index')) - 1;
+						$(this).attr('dc-index', newIndex);
+						var attributeName = getAttributeName($(this));
+				   replaceAttribute($(this), attributeName, newIndex);
+				});
+		}
+
+		function getAttributeName($element){
+			const elementType = {
+				'label': 'for',
+				'input': 'name',
+				'span': $element.attr('asp-validation-for') ? 'asp-validation-for' : 'data-valmsg-for',
+				'button': 'dc-index'
+			};
+
+			return elementType[$element.prop('tagName').toLowerCase()]
+		}
+
+		function toggleView() {
+		   $(".toggable-div").toggle();
+		}
+
+		$("#toggleMenuFields").click(function () {
+			toggleView();
+		});
+
+		var pattern =/Menus_?(?:\[(?:\d+)\]|(?:\d+))(?:__|\.)?(Name|Description)/
+
+		function replaceAttribute($element, attributeName, index){
+			if($element.is('button')){
+				$element.attr('dc-index', index);
+				return;
+			}
+			if($element.is('span') && $element.attr('asp-validation-for') !== 'undefined'){
+				var atribut = $element.attr('data-valmsg-for').replace(pattern, 'Menus[' + index + '].$1');
+				$element.attr('data-valmsg-for', atribut);
+			}
+			var currentAttribute = $element.attr(attributeName);
+			var newAttr = currentAttribute.replace(pattern, 'Menus[' + index + '].$1');
+			$element.attr(attributeName, newAttr);
+		}
+
+		$("#menuFields").off('click', '.clear-menu').on('click', '.clear-menu', function () {
+
+		   var index = parseInt($(this).attr('dc-index'));
+		   renderMenus(index);
+
+		   $('#menuFields').attr('data-count', parseInt($('#menuFields').attr('data-count')) - 1);
+
+		   $(this).prevAll('.form-group').slice(0,2).remove();
+		   $(this).remove();
+
+		  });
+
+		$("#addMenu").click(function() {
+			var html = '';
+			var counterVal = parseInt($('#menuFields').attr('data-count'));
+			html += '<div class="form-group">';
+			html += '<label for="Menus[' + (counterVal) +'].Name" dc-index="'+counterVal+'">Menu Name</label>';
+			html += '<input type="text" class="form-control" dc-index="'+counterVal+'" id="menuName1" name="Menus[' + (counterVal) +'].Name" />';
+			html += '<span asp-validation-for="Menus[' + (counterVal) + '].Name" dc-index="'+counterVal+'" class="text-danger" data-valmsg-for="Menus['+(counterVal)+'].Name" data-valmsg-replace="true"></span>';
+			html += '</div>';
+			html += '<div class="form-group">';
+			html += '<label for="Menus[' + (counterVal) +'].Description" dc-index="'+counterVal+'">Menu Description</label>';
+			html += '<input type="text" dc-index="'+counterVal+'" class="form-control" id="menuName1" name="Menus[' + (counterVal) +'].Description" />';
+			html += '<span asp-validation-for="Menus[' + (counterVal) + '].Description" dc-index="'+counterVal+'" class="text-danger" data-valmsg-for="Menus['+(counterVal)+'].Description" data-valmsg-replace="true"></span>';
+			html += '</div>';
+
+			$('#menuFields').append(html);
+
+			$('#menuFields').attr('data-count', counterVal + 1);
+			$('#menuFields').append('<button type="button" class="btn btn-danger clear-menu" dc-index="'+ counterVal+'">Clear</button>')
+
+			if(!($(".toggable-div").is(':visible'))){
+				toggleView();
+			}
+
+		});
+		});
+</script>
+}
