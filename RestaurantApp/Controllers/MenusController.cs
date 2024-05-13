@@ -192,13 +192,17 @@ namespace RestaurantApp.Controllers
                 {
                     var products = new List<Product>();
 
-                    foreach (var product in menu.Products)
+                    if (menu.Products != null)
                     {
-                        product.MenuId = menu.MenuId;
-                        products.Add(product);
-                    }
-                    _context.Products.UpdateRange(products);
+                        foreach (var product in menu.Products)
+                        {
+                            product.MenuId = menu.MenuId;
+                            products.Add(product);
+                        }
 
+                        _context.Products.UpdateRange(products);
+
+                    }
                     var menuToUpdate = await _context.Menus.FindAsync(menu.MenuId);
 
                     if (menuToUpdate == null)

@@ -30,10 +30,12 @@ namespace RestaurantApp.Helper
                 templateContent = ReplacePlaceholder(templateContent, "[[[MenuNameInput]]]", $"menu[0].Name");
                 templateContent = ReplacePlaceholder(templateContent, "[[[MenuDescriptionInput]]]", $"menu[0].Description");
 
+                StringBuilder productHtml = new StringBuilder();
+                productHtml.AppendLine($"<input type = 'hidden' for= 'menu_0__MenuId' class='form-control' value='{menu.MenuId}' name='menu[0].MenuId'/>");
+
                 if (menu.Products.Any())
                 {
                     string productTemplate = ReadFileContent(GetTemplateFilePath("ProdList.cshtml"));
-                    StringBuilder productHtml = new StringBuilder();
                     int index = 0;
 
                     productHtml.AppendLine("<div class='product-list'>");
@@ -56,11 +58,10 @@ namespace RestaurantApp.Helper
 
                         index++;
                     }
-                    productHtml.AppendLine($"<input type = 'hidden' for= 'menu_0__MenuId' class='form-control' value='{menu.MenuId}' name='menu[0].MenuId'/>");
                     return templateContent + productHtml.AppendLine("</div>").ToString();
                 }
                 Debug.Write(templateContent);
-                return templateContent; 
+                return templateContent + productHtml; 
 
 
             }
