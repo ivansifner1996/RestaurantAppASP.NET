@@ -1,4 +1,4 @@
-![image](https://github.com/ivansifner1996/RestaurantAppASP.NET/assets/54687506/11d7aa25-b778-4bcd-850c-e51ed74405c7)![image](https://github.com/ivansifner1996/RestaurantAppASP.NET/assets/54687506/2415410f-8052-4c11-b7b3-bfe9180cce0c)
+![image](https://github.com/ivansifner1996/RestaurantAppASP.NET/assets/54687506/2415410f-8052-4c11-b7b3-bfe9180cce0c)
 
 Menu page
 
